@@ -36,6 +36,14 @@ python manage.py runserver 0.0.0.0:8000
 
 The API health endpoint is `http://127.0.0.1:8000/api/v1/health/`. It reports whether the API and configured database are reachable.
 
+Load the clearly fictional sample timetable records after migrations:
+
+```powershell
+python manage.py load_demo_data
+```
+
+The web app can then search routes such as `ADI` to `MMCT`. All sample trains are labeled as demo records and are not live railway schedules.
+
 ### Start the web client
 
 In another terminal:
@@ -79,7 +87,7 @@ Live railway information must come from authorized or properly licensed sources.
 ## Planned phases
 
 1. Foundation and shared API connectivity (current)
-2. Accounts, stations, train catalog, search, and saved journeys
+2. Accounts, stations, train catalog, search, and saved journeys (current)
 3. Booking preparation and reminders
 4. Historical waitlist data and train-wise analytics
 5. Confirmation prediction and calibrated model reporting
