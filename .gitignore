@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+venv/
+.pytest_cache/
+coverage.xml
+htmlcov/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Web
+node_modules/
+web/dist/
+web/.vite/
+npm-debug.log*
+
+# Flutter / Android
+android/.dart_tool/
+android/.flutter-plugins
+android/.flutter-plugins-dependencies
+android/.packages
+android/build/
+android/.idea/
+android/*.iml
+android/local.properties
+android/.gradle/
+android/captures/
+android/.flutter-*
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local data and model artifacts
+data/local/
+ml_engine/models/*.joblib
+ml_engine/models/*.pkl
