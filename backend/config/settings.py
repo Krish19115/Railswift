@@ -30,6 +30,12 @@ INSTALLED_APPS = [
     "apps.stations",
     "apps.trains",
     "apps.journeys",
+    "apps.booking_assistant",
+    "apps.notifications",
+    "apps.historical",
+    "apps.predictions",
+    "apps.monitoring",
+    "apps.charts",
 ]
 
 MIDDLEWARE = [
@@ -97,3 +103,26 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+EMAIL_BACKEND = env("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="RailSwift <no-reply@railswift.local>")
+CELERY_BROKER_URL = env("CELERY_BROKER_URL", default="redis://127.0.0.1:6379/0")
+CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND", default="redis://127.0.0.1:6379/1")
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_BEAT_SCHEDULE = {
+    "dispatch-due-booking-reminders-every-minute": {
+        "task": "apps.booking_assistant.tasks.dispatch_due_reminders",
+        "schedule": 60.0,
+    },
+    "check-authorized-pnr-status-every-fifteen-minutes": {
+        "task": "apps.monitoring.tasks.check_due_pnr_trackers",
+        "schedule": 900.0,
+    },
+}
+
+RAILWAY_PROVIDER_CLASS = env("RAILWAY_PROVIDER_CLASS", default="")
+PNR_ENCRYPTION_KEY = env("PNR_ENCRYPTION_KEY", default="")
+CONFIRMATION_MODEL_PATH = env(
+    "CONFIRMATION_MODEL_PATH",
+    default=str(BASE_DIR / "ml_engine" / "models" / "confirmation.joblib"),
+)
