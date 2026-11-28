@@ -17,6 +17,8 @@ This phase establishes a shared Django API, a React web client, a Flutter Androi
 
 Copy `.env.example` to `.env` and replace the Django secret before using the app beyond local development. The values in the example are development-only.
 
+MySQL is the default database and runs through Docker Compose below. To run the API without Docker, set `DJANGO_DB_ENGINE=sqlite` in `.env`; the local database is stored in the ignored `db.sqlite3` file. Set it back to `mysql` when using the Compose database.
+
 ### Start MySQL
 
 ```powershell

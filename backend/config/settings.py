@@ -5,9 +5,9 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 env = environ.Env(
-    DEBUG=(bool, True),
-    ALLOWED_HOSTS=(list, ["localhost", "127.0.0.1"]),
-    CORS_ALLOWED_ORIGINS=(list, ["http://localhost:5173"]),
+    DJANGO_DEBUG=(bool, True),
+    DJANGO_ALLOWED_HOSTS=(list, ["localhost", "127.0.0.1"]),
+    DJANGO_CORS_ALLOWED_ORIGINS=(list, ["http://localhost:5173"]),
 )
 environ.Env.read_env(BASE_DIR / ".env")
 
@@ -67,17 +67,21 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": env("MYSQL_DATABASE", default="railswift"),
-        "USER": env("MYSQL_USER", default="railswift"),
-        "PASSWORD": env("MYSQL_PASSWORD", default="railswift_dev_only"),
-        "HOST": env("MYSQL_HOST", default="127.0.0.1"),
-        "PORT": env("MYSQL_PORT", default="3306"),
-        "OPTIONS": {"charset": "utf8mb4"},
+DB_ENGINE = env("DJANGO_DB_ENGINE", default="mysql").lower()
+if DB_ENGINE == "sqlite":
+    DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": str(BASE_DIR / "db.sqlite3")}}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": env("MYSQL_DATABASE", default="railswift"),
+            "USER": env("MYSQL_USER", default="railswift"),
+            "PASSWORD": env("MYSQL_PASSWORD", default="railswift_dev_only"),
+            "HOST": env("MYSQL_HOST", default="127.0.0.1"),
+            "PORT": env("MYSQL_PORT", default="3306"),
+            "OPTIONS": {"charset": "utf8mb4"},
+        }
     }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

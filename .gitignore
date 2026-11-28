@@ -4,6 +4,10 @@ __pycache__/
 *.sqlite3
 .venv/
 venv/
+.python-runtime/
+.python-installer.exe
+.python-embed.zip
+.get-pip.py
 .pytest_cache/
 coverage.xml
 htmlcov/
